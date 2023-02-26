@@ -12,7 +12,7 @@ import java.util.List;
  * @author mofan 2021/2/6
  */
 @Configuration
-@ComponentScan({"indi.mofan.mapper", "indi.mofan.converter"})
+@ComponentScan({"indi.mofan.mapper", "indi.mofan.converter", "org.mapstruct.extensions.spring.converter"})
 public class SpringConfig {
 
     @Bean
