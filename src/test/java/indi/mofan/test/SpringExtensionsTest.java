@@ -7,6 +7,7 @@ import indi.mofan.common.dto.OptionalDto;
 import indi.mofan.common.entity.Animal;
 import indi.mofan.common.entity.Cage;
 import indi.mofan.common.entity.Car;
+import indi.mofan.common.util.SpringExtensionHelper;
 import indi.mofan.config.SpringConfig;
 import org.junit.Assert;
 import org.junit.Test;
@@ -18,7 +19,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -29,7 +32,7 @@ import java.util.Optional;
 @ContextConfiguration(classes = SpringConfig.class)
 public class SpringExtensionsTest {
     @Autowired
-    @Qualifier("myConversionService")
+    @Qualifier(SpringExtensionHelper.CONVERSION_SERVICE_BEAN_NAME)
     private ConversionService conversionService;
 
     @Test
@@ -75,5 +78,17 @@ public class SpringExtensionsTest {
         Assert.assertTrue(optional.isPresent());
         Assert.assertEquals("Morris", optional.map(CarDto::getMake).orElse(""));
         Assert.assertNull(optional.map(CarDto::getType).orElse(null));
+    }
+
+    @Test
+    public void testConvertList() {
+        Car car = new Car();
+        car.setMake("Morris");
+
+        List<CarDto> carDtoList = SpringExtensionHelper.convertList(Collections.singletonList(car), CarDto.class);
+        Assert.assertEquals(1, carDtoList.size());
+        CarDto carDto = carDtoList.get(0);
+        Assert.assertNotNull(carDto);
+        Assert.assertEquals("Morris", carDto.getMake());
     }
 }
