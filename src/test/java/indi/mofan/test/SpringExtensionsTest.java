@@ -2,6 +2,8 @@ package indi.mofan.test;
 
 import indi.mofan.common.dto.CageDto;
 import indi.mofan.common.dto.CarDto;
+import indi.mofan.common.dto.NestedDto;
+import indi.mofan.common.dto.OptionalDto;
 import indi.mofan.common.entity.Animal;
 import indi.mofan.common.entity.Cage;
 import indi.mofan.common.entity.Car;
@@ -10,12 +12,14 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 /**
  * @author mofan
@@ -25,6 +29,7 @@ import java.util.Date;
 @ContextConfiguration(classes = SpringConfig.class)
 public class SpringExtensionsTest {
     @Autowired
+    @Qualifier("myConversionService")
     private ConversionService conversionService;
 
     @Test
@@ -54,5 +59,21 @@ public class SpringExtensionsTest {
         Assert.assertEquals("70*50*60", cageDto.getSize());
         Assert.assertEquals("小黑", cageDto.getDog().getName());
         Assert.assertEquals("Dog", cageDto.getDog().getType());
+    }
+
+    @Test
+    public void testExternalConversions() {
+        CarDto carDto = new CarDto();
+        carDto.setMake("Morris");
+        NestedDto nestedDto = new NestedDto();
+        nestedDto.setCarDto(carDto);
+
+        OptionalDto convert = conversionService.convert(nestedDto, OptionalDto.class);
+        Assert.assertNotNull(convert);
+        Optional<CarDto> optional = convert.getOptional();
+        Assert.assertNotNull(optional);
+        Assert.assertTrue(optional.isPresent());
+        Assert.assertEquals("Morris", optional.map(CarDto::getMake).orElse(""));
+        Assert.assertNull(optional.map(CarDto::getType).orElse(null));
     }
 }
