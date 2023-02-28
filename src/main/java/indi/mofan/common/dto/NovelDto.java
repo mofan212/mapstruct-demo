@@ -10,8 +10,8 @@ import java.beans.ConstructorProperties;
  */
 @Getter
 public class NovelDto {
-    private String bookName;
-    private Double price;
+    private final String bookName;
+    private final Double price;
     private String author;
 
     @Default

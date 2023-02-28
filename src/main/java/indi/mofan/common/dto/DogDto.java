@@ -23,8 +23,9 @@ public class DogDto {
 //    }
 //
 //    /**
-//     * 创建方法
-//     * @return 生成器
+//     * 构建器创建方法
+//     *
+//     * @return 构建器
 //     */
 //    public static DogDto.Builder builder() {
 //        return new DogDto.Builder();
@@ -46,7 +47,8 @@ public class DogDto {
 //
 //        /**
 //         * 构建方法
-//         * @return 被构建的类
+//         *
+//         * @return 被构建的对象
 //         */
 //        public DogDto create() {
 //            return new DogDto(this);
