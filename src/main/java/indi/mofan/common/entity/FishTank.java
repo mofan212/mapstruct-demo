@@ -1,6 +1,5 @@
 package indi.mofan.common.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,8 +8,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
 public class FishTank {
+    private Fish fish;
     private int length;
     private int width;
     private int height;

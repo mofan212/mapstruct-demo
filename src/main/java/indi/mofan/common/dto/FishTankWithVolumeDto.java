@@ -9,5 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class FishTankWithVolumeDto {
+    private FishDto fish;
     private VolumeDto volume;
 }

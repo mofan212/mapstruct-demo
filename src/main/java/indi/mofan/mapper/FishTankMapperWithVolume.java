@@ -18,11 +18,13 @@ public abstract class FishTankMapperWithVolume {
 
     /**
      * <p>将 FishTank 转换为 FishTankWithVolumeDto</p>
-     * <code>@Mapping</code> 注解的 source 属性值是 mapVolume() 方法的参数,
+     * <code>@Mapping</code> 注解的 source 属性值是 map() 方法的参数,
      * 而不是 FishTank 中的属性
-     * @param source    FishTank实例
-     * @return          FishTankWithVolumeDto 实例
+     *
+     * @param source FishTank实例
+     * @return FishTankWithVolumeDto 实例
      */
+    @Mapping(target = "fish.kind", source = "source.fish.type")
     @Mapping(target = "volume", source = "source")
     public abstract FishTankWithVolumeDto map(FishTank source);
 
